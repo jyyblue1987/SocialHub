@@ -1,0 +1,16 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.os.Bundle;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class vehicle_inspect extends CustomActivity {
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.vehicle_incide);
+    }
+}

@@ -1,0 +1,51 @@
+package com.fastwiki.com.socialhub.model;
+
+public class FriendData
+{
+    private String friendUid;
+    private String friendName;
+    private String friendEmail;
+    private String friendPhotoUrl;
+
+    public FriendData(String paramUid , String paramString1, String paramString2, String paramString3)
+    {
+        this.friendUid = paramUid;
+        this.friendName = paramString1;
+        this.friendEmail = paramString2;
+        this.friendPhotoUrl = paramString3;
+    }
+
+    public String getFriendUid()
+    {
+        return this.friendUid;
+    }
+
+    public void setFriendName(String paramString)
+    {
+        this.friendName = paramString;
+    }
+    public String getFriendName()
+    {
+        return this.friendName;
+    }
+
+    public void setFriendEmail(String paramString)
+    {
+        this.friendEmail = paramString;
+    }
+    public String getFriendEmail()
+    {
+        return this.friendEmail;
+    }
+
+    public void setFriendPhotoUrl(String paramString)
+    {
+        this.friendPhotoUrl = paramString;
+    }
+    public String getFriendPhotoUrl()
+    {
+        return this.friendPhotoUrl;
+    }
+
+}
+

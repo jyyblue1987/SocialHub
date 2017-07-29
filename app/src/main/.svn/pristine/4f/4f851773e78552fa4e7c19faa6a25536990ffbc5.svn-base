@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#130E07">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.02"
+            android:background="#92C83E"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Work Order"
+                android:gravity="center_vertical"
+                android:id="@+id/textView16"
+                android:layout_weight="0.3"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:id="@+id/trips_spinner"
+                android:layout_weight="0.7"
+                android:background="#130E07"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <DatePicker
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="30dp"
+                android:background="#CCCCCC"
+                android:id="@+id/duedatePicker"
+                android:layout_gravity="center_horizontal" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/pmtype_spin" />
+            <EditText android:id="@+id/trips_description"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="PM Detail Description"
+                style="@style/common_edittext" />
+            <EditText android:id="@+id/trips_cost"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="PM Unit/Cost"
+                style="@style/common_edittext" />
+
+            <EditText android:id="@+id/trips_details"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Detail:"
+                style="@style/common_edittext" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Total:"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView39"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="#92C83E"
+                    android:textAlignment="textEnd"
+                    android:textSize="18dp" />
+
+                <EditText android:id="@+id/trips_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="3.4"
+                    android:textSize="18dp"
+                    android:textColor="#FFFFFF"
+                    style="@style/common_edittext" />
+
+            </LinearLayout>
+
+            <Button android:id="@+id/btntripsave"
+                android:layout_width="200dp" android:layout_height="35dp"
+                android:gravity="right"
+                android:layout_gravity="center_horizontal"
+                android:background="#92C83E"
+                android:text="SAVE"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_marginTop="30dp" />
+        </LinearLayout>
+
+</LinearLayout>
+    </LinearLayout>

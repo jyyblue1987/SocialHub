@@ -1,0 +1,340 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import android.app.Dialog;
+import android.widget.Toast;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+import com.fastwiki.com.socialhub.model.ContactData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+public class Contact extends CustomFragment
+{
+    private GetContactJSON gj;
+    private ListView localListView;
+
+    String c_mode = "";
+    ContactData c_contactData;
+
+    private ArrayList<ContactData> testList;
+
+    public void onLoadTestData(){
+        this.testList = new ArrayList();
+        testList.add(new ContactData("a" ,"b" ,"c"));
+        testList.add(new ContactData("a" ,"b" ,"c"));
+        testList.add(new ContactData("a" ,"b" ,"c"));
+        testList.add(new ContactData("a" ,"b" ,"c"));
+        testList.add(new ContactData("a" ,"b" ,"c"));
+    }
+
+    public Contact(){}
+
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.contact, null);
+        localListView = (ListView)localView.findViewById(R.id.list);
+
+        localListView.setLongClickable(true);
+
+        // 시험자료
+        // onLoadTestData();
+        // localListView.setAdapter(new ContactAdapter(getContext() , testList));
+
+        // 자료기지에서 읽어온다.
+        gj = new GetContactJSON(getContext() , localListView);
+        gj.execute("");
+
+
+        localListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Contact.this.showProcessDialog(i);
+                return true;
+            }
+        });
+
+        localListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setBackgroundColor(Color.parseColor("#FF0000"));
+                //Contact.this.showProcessDialog(i);
+            }
+        });
+
+        setHasOptionsMenu(true);
+        return localView;
+    }
+
+
+    public void onCreateOptionsMenu(Menu paramMenu, MenuInflater paramMenuInflater)
+    {
+        paramMenuInflater.inflate(R.menu.contact_menu, paramMenu);
+        super.onCreateOptionsMenu(paramMenu, paramMenuInflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if ( item.getItemId() == R.id.action_add ) {
+            showProcessDialog(-1);
+        }
+        if ( item.getItemId() == R.id.action_delete ) {
+
+            CheckBox m_chkDel;
+            /*
+            for (int i = 0 ; i < localListView.getCount() - 1; i++){
+                m_chkDel = (CheckBox)(localListView.getChildAt(i).findViewById(R.id.chkDel));
+                if (m_chkDel.isChecked()){
+                    c_contactData = (ContactData)(Contact.this.gj.contactArrayList.get(i));
+                    onProcess("delete" , c_contactData);
+                }
+            }*/
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showProcessDialog(int idx){
+
+        final Dialog dlg = new Dialog(getContext());
+        dlg.setContentView(R.layout.contact_dlg);
+
+        if (idx != -1){
+            c_mode = "Update";
+            ContactData contactData = ((ContactData)gj.contactArrayList.get(idx));
+            ((EditText)(dlg.findViewById(R.id.contactName))).setText(contactData.getContactName());
+            ((EditText)(dlg.findViewById(R.id.contactMobileNo))).setText(contactData.getContactMobileNum());
+            ((EditText)(dlg.findViewById(R.id.contactEmail))).setText(contactData.getContactEmail());
+        }
+        else{
+            c_mode = "Add";
+        }
+
+        dlg.setTitle(c_mode+"Contact");
+        Button btnAdd = (Button)dlg.findViewById(R.id.btnAdd);
+        btnAdd.setText(c_mode);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 추가 및 수정동작을 진행한다.
+
+                String contactName = ((EditText)(dlg.findViewById(R.id.contactName))).getText().toString();
+                String contactMobileNo = ((EditText)(dlg.findViewById(R.id.contactMobileNo))).getText().toString();
+                String contactEmail = ((EditText)(dlg.findViewById(R.id.contactEmail))).getText().toString();
+                c_contactData = new ContactData(contactName,contactMobileNo,contactEmail);
+
+                if(onProcess(c_mode , c_contactData) == true)
+                    dlg.dismiss();
+            }
+        });
+        dlg.show();
+    }
+
+    public boolean onProcess(String p_mode , ContactData p_contactData)
+    {
+        String ret_val = p_mode + "--" + p_contactData.getContactName() + "--" + p_contactData.getContactMobileNum() + "--" + p_contactData.getContactEmail();
+        Toast.makeText(getContext() , ret_val , Toast.LENGTH_SHORT).show();
+
+        //ProcessContact pc = new ProcessContact(p_mode , p_contactData);
+        //pc.execute();
+        return true;
+    }
+
+    class ContactAdapter extends BaseAdapter
+    {
+        private Context context;
+        private ArrayList<ContactData> items;
+        public ContactAdapter(Context paramContext, ArrayList<ContactData> paramArrayList)
+        {
+            this.context = paramContext;
+            this.items = paramArrayList;
+        }
+        public int getCount()
+        {
+            return this.items.size();
+        }
+        public ContactData getItem(int paramInt)
+        {
+            return (ContactData)this.items.get(paramInt);
+        }
+        public long getItemId(int paramInt)
+        {
+            return paramInt;
+        }
+
+        public View getView(final int paramInt, View paramView, ViewGroup paramViewGroup)
+        {
+            if (paramView == null) {
+                paramView = LayoutInflater.from(this.context).inflate(R.layout.contact_item, null);
+            }
+            ((TextView)paramView.findViewById(R.id.lbl1)).setText(getItem(paramInt).getContactName());
+            ((TextView)paramView.findViewById(R.id.lbl2)).setText(getItem(paramInt).getContactMobileNum());
+            ((TextView)paramView.findViewById(R.id.lbl3)).setText(getItem(paramInt).getContactEmail());
+
+            return paramView;
+        }
+    }
+
+    // 자료기지조작부분
+    class ProcessContact extends AsyncTask<Void, Void, String> {
+
+        Globals g = Globals.getInstance();
+        private String c_mode;
+        private ContactData c_contactData;
+
+        ProcessContact(String p_mode, ContactData p_contactData) {
+            this.c_mode = p_mode;
+            this.c_contactData = p_contactData;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            String link = "" , data = "" , result = "";
+            BufferedReader bufferedReader;
+            try {
+                // 추가
+                if (this.c_mode.equals("add")){
+                    data = "?mode=add";
+                    data += "&contactName=" + URLEncoder.encode(c_contactData.getContactName(), "UTF-8");
+                    data += "&contactMobileNo=" + URLEncoder.encode(c_contactData.getContactMobileNum(), "UTF-8");
+                    data += "&contactEmail=" + URLEncoder.encode(c_contactData.getContactEmail(), "UTF-8");
+                }
+                // 수정
+                if (this.c_mode.equals("update")){
+                    data = "?mode=update";
+                    data += "&contactUid=" + URLEncoder.encode(c_contactData.getContactName(), "UTF-8");
+                    data += "&contactName=" + URLEncoder.encode(c_contactData.getContactName(), "UTF-8");
+                    data += "&contactMobileNo=" + URLEncoder.encode(c_contactData.getContactMobileNum(), "UTF-8");
+                    data += "&contactEmail=" + URLEncoder.encode(c_contactData.getContactEmail(), "UTF-8");
+                }
+                // 삭제
+                if (this.c_mode.equals("del")){
+                    data = "?mode=delete";
+                    data += "&contactUid=" + URLEncoder.encode(c_contactData.getContactName(), "UTF-8");
+                }
+
+                link = g.getMySiteUrl()+ "/login.php" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.equals("yes")){
+
+            }
+        }
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
+    // 리스트내용을 읽어오는 부분
+    class GetContactJSON extends AsyncTask<String, Void, String> {
+
+        Globals g = Globals.getInstance();
+        private String myJSONString;
+        private static final String JSON_ARRAY ="result";
+        ArrayList contactArrayList = new ArrayList();
+        private JSONArray retList = null;
+        Context context;
+        ListView listView;
+
+        public GetContactJSON(Context c , ListView v){
+            context = c;
+            listView = v;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            BufferedReader bufferedReader = null;
+            try {
+                String uri = null;
+                uri = g.getMySiteUrl()+"/readFromdb.php";;
+                uri += "?mode=imageListInfo&sel_kind=2";
+                URL url = new URL(uri);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                StringBuilder sb = new StringBuilder();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String json;
+                while((json = bufferedReader.readLine())!= null){sb.append(json+"\n");}
+                return sb.toString().trim();
+
+            }catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            super.onPostExecute(s);
+            myJSONString = "{'"+JSON_ARRAY+"':" + s + "}";
+            try {
+                JSONObject jsonObject = new JSONObject(myJSONString);
+                retList = jsonObject.getJSONArray(JSON_ARRAY);
+                JSONObject oneObj;
+                contactArrayList.clear();
+                for (int i = 0; i < retList.length(); i++)
+                {
+                    oneObj = retList.getJSONObject(i);
+                    contactArrayList.add(new ContactData(oneObj.getString("uid") ,oneObj.getString("imgname") ,oneObj.getString("imgdesc")));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listView.setAdapter(new ContactAdapter(context , contactArrayList));
+        }
+    }
+}

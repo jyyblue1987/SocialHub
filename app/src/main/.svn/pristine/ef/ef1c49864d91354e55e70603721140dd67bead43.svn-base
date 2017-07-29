@@ -1,0 +1,359 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Calendar;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class vehicle_mainadd extends CustomActivity {
+    Globals g = Globals.getInstance();
+    Button btnUpdate;
+    ProgressDialog progressUpdate = null;
+    UpdateProfileTask uptTask;
+    private DatePicker datePicker;
+    private Calendar calendar;
+    private TextView dateView;
+    private int year, month, day;
+    String  Vendortype_id , Vehiclename,Mainttype,Periority,Vendorid;
+
+
+    private EditText serverodometer, servicedate, Cost, Comments;
+
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.vehicle_mainupdate);
+
+        serverodometer = (EditText) findViewById(R.id.service_odometer);
+      //  servicedate = (EditText) findViewById(R.id.duedatePicker);
+        //Cost = (EditText) findViewById(R.id.service_cost);
+        Comments = (EditText) findViewById(R.id.service_comment);
+
+        dateView =(TextView) findViewById(R.id.duedatePicker) ;
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        showDate(year, month+1, day);
+
+        btnUpdate = (Button) findViewById(R.id.btnSettingsProfileUpdate);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressUpdate = ProgressDialog.show(getApplicationContext(), "", "", true);
+                uptTask = new UpdateProfileTask();
+                uptTask.execute();
+            }
+        });
+    }
+
+    public void setDate(View view) {
+        showDialog(999);
+        Toast.makeText(getApplicationContext(), "ca", Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this, myDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+            // arg1 = year
+            // arg2 = month
+            // arg3 = day
+            showDate(arg1, arg2+1, arg3);
+        }
+    };
+
+    private void showDate(int year, int month, int day) {
+        dateView.setText(new StringBuilder().append(day).append("/")
+                .append(month).append("/").append(year));
+    }
+
+
+/*
+    public void setProfileInfo() {
+
+        serverodometer.setText(g.getUserData().getFirstName());
+        servicedate.setText(g.getUserData().getLastName());
+        Cost.setText(g.getUserData().getEmail());
+        Comments.setText(g.getUserData().getLicenseNumber());
+    }
+*/
+    public class UpdateProfileTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link, data, result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+
+            try {
+                data = "?Vehicle_ID=" + Vehiclename;
+                data += "&Service_Type_ID=" + Mainttype;
+                data += "&Service_Odometer=" + URLEncoder.encode(String.valueOf(serverodometer), "UTF-8");
+                data += "&Service_Date=" + URLEncoder.encode(String.valueOf(dateView), "UTF-8");
+                data += "&Create_By=" + URLEncoder.encode(String.valueOf(Cost), "UTF-8");
+                data += "&Comments=" + URLEncoder.encode(String.valueOf(Comments), "UTF-8");
+                data += "&Vendor_ID=" + URLEncoder.encode(String.valueOf(Comments), "UTF-8");
+                data += "&Vendor_Type_ID=" + URLEncoder.encode(String.valueOf(Comments), "UTF-8");
+                data += "&Priority_ID=";
+                data += "&callback";
+                link = g.getMySiteUrl() + "/webservice/public/CreateService" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            progressUpdate.dismiss();
+            if (result.equals("yes")) {
+
+
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+
+    public class vendortype_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Team_ID=36D107EB-0E9F-4680-9D99-E3FA0BA02A6B" ;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/VendorType" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+                // JSONObject jsonObject = new JSONObject(result);
+                String  vendortype_id = deviceDetails.getString("Vendor_Type_ID");
+                String vendortype_name = deviceDetails.getString("Vendor_Type_Name");
+                Vendortype_id = vendortype_id;
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+    public class Vehicle_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Team_ID=36D107EB-0E9F-4680-9D99-E3FA0BA02A6B" ;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/GetVechileDetails" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+                // JSONObject jsonObject = new JSONObject(result);
+                String  vendortype_id = deviceDetails.getString("Vehicle_ID");
+                String vendortype_name = deviceDetails.getString("Vehicle_Name");
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+    public class maintence_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Team_ID=36D107EB-0E9F-4680-9D99-E3FA0BA02A6B" ;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/GetMaintDetails" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+                // JSONObject jsonObject = new JSONObject(result);
+                String  maintence_id = deviceDetails.getString("Service_Type_ID");
+                String  maintence_name = deviceDetails.getString("Service_Name");
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+    public class Vendor_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Vendor_Type_ID=" +Vendortype_id;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/Vendor" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+                // JSONObject jsonObject = new JSONObject(result);
+                String  maintence_id = deviceDetails.getString("Vendor_ID");
+                String  maintence_name = deviceDetails.getString("Vendor_Name");
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+}

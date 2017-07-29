@@ -1,0 +1,50 @@
+package com.fastwiki.com.socialhub.model;
+
+public class LoginData
+{
+    private String user_id;
+    private String login_id;
+    private String login_pass;
+    private String isActive;
+    private String IsDeleted;
+    private String team_id;
+    private String group_id;
+
+    public LoginData(String s1, String s2, String s3, String s4 , String s5, String s6, String s7)
+    {
+        this.user_id     = s1;
+        this.login_id    = s2;
+        this.login_pass  = s3;
+        this.isActive    = s4;
+        this.IsDeleted   = s5;
+        this.team_id     = s6;
+        this.group_id    = s7;
+    }
+
+    public String getUserId(){ return this.user_id; }
+    public String getLoginId()
+    {
+        return this.login_id;
+    }
+    public String getLoginPass()
+    {
+        return this.login_pass;
+    }
+    public String getActiveStatus()
+    {
+        return this.isActive;
+    }
+    public String getDeletedStatus()
+    {
+        return this.IsDeleted;
+    }
+    public String getTeamId()
+    {
+        return this.team_id;
+    }
+    public String getGroupId()
+    {
+        return this.group_id;
+    }
+
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/white">
+
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/top_bar"
+        android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <EditText android:id="@+id/searchStr" android:layout_width="0dp" android:layout_height="wrap_content"
+            android:hint="@string/find" style="@style/edittext_search" android:layout_weight="1.0"/>
+    </LinearLayout>
+
+    <ListView android:id="@id/list" android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:padding="5dp" android:divider="@color/main_color_gray_light" android:dividerHeight="1.0dip"/>
+</LinearLayout>

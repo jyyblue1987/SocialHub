@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black"
+    android:gravity="center_vertical"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:weightSum="4">
+
+        <Button android:id="@+id/btnGoHome" style="@style/common_btn"
+            android:text="Go Home" android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
+        <Button android:id="@+id/btnFavorite" style="@style/common_btn"
+            android:text="Favorite" android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
+        <Button android:id="@+id/btnRecentSelection" style="@style/common_btn"
+            android:text="Recent Selections" android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
+        <Button android:id="@+id/btnCustomPoi" style="@style/common_btn"
+            android:text="Custom POI" android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

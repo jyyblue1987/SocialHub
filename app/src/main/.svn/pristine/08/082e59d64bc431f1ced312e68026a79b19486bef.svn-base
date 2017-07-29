@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_margin="0dp"
+    android:background="#130E07"
+    android:weightSum="5">
+
+    <Button
+        style="@style/vehicbutton"
+        android:text="Expence"
+        android:id="@+id/inexpence"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        />
+
+    <Button
+        style="@style/vehicbutton"
+        android:text="Analyze"
+        android:id="@+id/inanayze"
+        android:layout_weight="1"
+        />
+
+
+</LinearLayout>

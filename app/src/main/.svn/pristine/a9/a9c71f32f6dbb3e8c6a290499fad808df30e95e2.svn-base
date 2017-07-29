@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#130E07"  android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="10">
+
+            <Button android:id="@+id/btnDriving" style="@style/common_btn"
+                android:text="Driving" android:layout_weight="1" />
+
+            <Button android:id="@+id/btnOnDudy" style="@style/common_btn"
+                android:text="On Duty" android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
+
+            <Button android:id="@+id/btnOffDudy" style="@style/common_btn"
+                android:text="Off Duty" android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
+
+            <Button android:id="@+id/btnSleeper" style="@style/common_btn"
+                android:text="Sleeper" android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
+
+            <Button android:id="@+id/btnSubStatus" style="@style/common_btn"
+                android:text="Substatus" android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

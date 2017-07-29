@@ -1,0 +1,52 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class Trip extends CustomFragment
+{
+    Button btninexpence , btninanayze;
+    public Trip(){}
+
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.trips_main, null);
+        btninexpence = (Button)localView.findViewById(R.id.inexpence);
+        btninexpence.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Trip.this.getActivity(), Tripexpence.class);
+                Trip.this.startActivity(intent);
+            }
+        });
+        btninanayze = (Button)localView.findViewById(R.id.inanayze);
+        btninanayze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Trip.this.getActivity(), Tripanayze.class);
+                Trip.this.startActivity(intent);
+            }
+        });
+
+
+        setHasOptionsMenu(true);
+        return localView;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+    {
+        return super.onOptionsItemSelected(paramMenuItem);
+    }
+}

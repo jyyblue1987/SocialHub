@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@drawable/board">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="Start:"
+                    android:textSize="18dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView29"
+                    android:textColor="#92C83E"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textmaintype"
+                    android:layout_weight="0.8"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="End:"
+                    android:textSize="18dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView30"
+                    android:textColor="#92C83E"
+                    android:layout_weight="0.2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textmaindate"
+                    android:layout_weight="0.8"/>
+            </LinearLayout>
+
+        </LinearLayout>
+</RelativeLayout>

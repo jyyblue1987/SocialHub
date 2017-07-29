@@ -1,0 +1,58 @@
+package com.fastwiki.com.socialhub;
+
+import com.fastwiki.com.socialhub.data.UserData;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Globals {
+
+    private static Globals instance;
+    private String mySiteUrl;
+
+    private UserData sel_userData;
+    private String sel_status;
+
+    public String getMySiteUrl() {
+        mySiteUrl = "http://altraxs.altracore.com/webservice";
+        // mySiteUrl = "http://192.168.137.88/webservice/index.php";
+        return mySiteUrl;
+    }
+
+    public String getJsonStringByJsonp(String str){
+
+        String ret = null;
+        ret = str.replace(")", "");
+        ret = ret.replace("(", "");
+        ret = ret.replace("]", "");
+        ret = ret.replace("[", "");
+        return ret;
+    }
+
+    public void setUser(UserData param){
+        sel_userData = param;
+    }
+    public UserData getUser(){
+        return sel_userData;
+    }
+
+    public void setStatus(String param){
+        sel_status = param;
+    }
+    public String getStatus(){
+        return sel_status;
+    }
+
+    public String getCurrentTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String currentDateandTime = sdf.format(new Date());
+        return currentDateandTime;
+    }
+
+    public static synchronized Globals getInstance(){
+        if(instance==null){
+            instance=new Globals();
+        }
+        return instance;
+    }
+}

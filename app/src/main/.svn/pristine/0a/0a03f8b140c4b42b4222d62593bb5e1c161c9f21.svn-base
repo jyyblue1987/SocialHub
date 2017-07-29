@@ -1,0 +1,19 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.os.Bundle;
+import android.widget.ListView;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class settings_tpms extends CustomActivity {
+    protected void onCreate(Bundle paramBundle)
+    {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.navigate_navigate);
+
+    }
+}

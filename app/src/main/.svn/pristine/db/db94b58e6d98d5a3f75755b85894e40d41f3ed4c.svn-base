@@ -1,0 +1,7 @@
+package com.fastwiki.com.socialhub.ui;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class Trip {
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#130E07">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.02"
+            android:background="#92C83E"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Vehicle Name:"
+                android:gravity="center_vertical"
+                android:id="@+id/textView16"
+                android:layout_weight="0.3"
+                android:layout_marginLeft="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:id="@+id/vehicel_spin"
+                android:layout_weight="0.7"
+                android:background="#130E07"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.02"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="112dp"
+                android:layout_height="match_parent"
+                android:text="Schedule"
+                android:textColor="#FFFFFF"
+                android:textSize="24dp"
+                android:gravity="center_vertical"
+                android:id="@+id/textView32" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Maintenance"
+                android:textColor="#88BF45"
+                android:textSize="24dp"
+                android:id="@+id/textView33"
+                android:layout_weight="0.02" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/vehiclelist"
+            android:layout_weight="0.02" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/ic_plus"
+        android:orderInCategory="100"
+        android:showAsAction="always"/>
+
+</menu>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#130E07">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.02"
+            android:background="#92C83E"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="Update Maintenance Information"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:id="@+id/textView34"
+                android:layout_weight="0.7"
+               android:textStyle="bold"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="All fields are required"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:id="@+id/textView35"
+                android:layout_weight="0.3"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/board"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Vehicle Name:"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView17"
+                    android:layout_weight="0.6"
+                    android:textColor="#A5D654"
+                    android:textStyle="bold"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textVehicle"
+                    android:textSize="18dp"
+                    android:layout_weight="0.4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Maintenance Type :"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView18"
+                    android:layout_weight="0.6"
+                    android:textStyle="bold"
+                    android:textColor="#A5D654"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textmaintype"
+                    android:textSize="18dp"
+                    android:layout_weight="0.4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.3">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Vendor :"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView19"
+                    android:layout_weight="0.6"
+                    android:textStyle="bold"
+                    android:textColor="#A5D654"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textvendor"
+                    android:textSize="18dp"
+                    android:layout_weight="0.4" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <EditText android:id="@+id/service_odometer"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#CCCCCC"
+            android:hint="Service Odometer"
+            style="@style/editext_normal" />
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="#CCCCCC"
+            android:id="@+id/duedatePicker"
+            android:layout_gravity="center_horizontal" />
+        <EditText android:id="@+id/service_cost"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#CCCCCC"
+            android:hint="Service Cost"
+            style="@style/editext_normal" />
+        <EditText android:id="@+id/service_comment"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
+            android:background="#CCCCCC"
+            android:hint="Comments"
+            style="@style/editext_normal" />
+
+        <Button android:id="@id/btnincidesubmit"
+            android:layout_width="200dp" android:layout_height="35dp"
+            android:gravity="right"
+            android:layout_gravity="center_horizontal"
+            android:background="#92C83E"
+            android:text="SAVE"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="22dp"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+</LinearLayout>

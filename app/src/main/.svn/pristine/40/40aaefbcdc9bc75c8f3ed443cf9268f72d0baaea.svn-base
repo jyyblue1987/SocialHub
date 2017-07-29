@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#130E07">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollincide"
+        android:layout_gravity="center_vertical" >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout01"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Incident Location"
+                android:id="@+id/textView28"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/vehicel_spin" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/incident_spin" />
+            <DatePicker
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/IncidentPicker"
+                android:layout_gravity="center_horizontal" />
+
+            <TextClock
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/textClock"
+                android:background="#CCCCCC" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/serverty_spin" />
+
+            <EditText android:id="@+id/vehicle_address"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Address"
+                style="@style/editext_normal" />
+            <EditText android:id="@+id/vehicle_city"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="City"
+                style="@style/editext_normal" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/state_spin" />
+            <EditText android:id="@+id/vehicle_zipcode"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Zip Code"
+                style="@style/editext_normal" />
+            <EditText android:id="@+id/vehicle_details"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Vehicle Incident Details"
+                style="@style/editext_normal" />
+            <CheckBox android:id="@+id/cand"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Can Drivable"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/AnyF"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Any Fatality"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/AssetT"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Asset Towed"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/CalledI"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Called Insurence"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/citation"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Citation Issued"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/InjuryT"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Injury Treated"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <CheckBox android:id="@+id/Prevent"
+                android:layout_height="25dp"
+                android:layout_width="match_parent"
+                android:text="Preventable"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+            <EditText android:id="@+id/vehicle_Insurence"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Insurence response"
+                style="@style/editext_normal" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/vehicel_vendortype" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/incident_vendor" />
+            <EditText android:id="@+id/vehicle_police"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Police Report"
+                style="@style/editext_normal" />
+            <DatePicker
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:id="@+id/RepairePicker"
+                android:layout_gravity="center_horizontal" />
+            <EditText android:id="@+id/vehicle_estimated"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Estimated Repair Cost"
+                style="@style/editext_normal" />
+            <EditText android:id="@+id/vehicle_ActualCost"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Actual Repair Cost"
+                style="@style/editext_normal" />
+            <EditText android:id="@+id/vehicle_comments"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:background="#CCCCCC"
+                android:hint="Comments"
+                style="@style/editext_normal" />
+
+            <Button android:id="@+id/btnincidesubmit"
+                android:layout_width="200dp" android:layout_height="35dp"
+                android:gravity="right"
+                android:layout_gravity="center_horizontal"
+                android:background="#92C83E"
+                android:text="SUBMIT"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="22dp"
+                android:layout_marginTop="30dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

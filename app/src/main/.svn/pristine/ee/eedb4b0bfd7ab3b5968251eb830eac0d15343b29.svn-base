@@ -1,0 +1,133 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+import com.fastwiki.com.socialhub.data.OrderData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class vehicle_mainupdate extends CustomActivity {
+    Globals g = Globals.getInstance();
+    Button btnUpdate;
+    ProgressDialog progressUpdate = null;
+    UpdateProfileTask uptTask;
+
+     Bundle b = getIntent().getExtras();
+     String serviceid = b.getString("service_id");
+     String vehicle_name = b.getString("vehicle_name");
+     String Priority_id = b.getString("Priority_id");
+
+    private EditText serverodometer, servicedate, Cost, Comments;
+
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.vehicle_mainupdate);
+
+        serverodometer = (EditText) findViewById(R.id.service_odometer);
+        servicedate = (EditText) findViewById(R.id.duedatePicker);
+        Cost = (EditText) findViewById(R.id.service_cost);
+        Comments = (EditText) findViewById(R.id.service_comment);
+
+   //     setProfileInfo();
+
+        btnUpdate = (Button) findViewById(R.id.btnSettingsProfileUpdate);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressUpdate = ProgressDialog.show(getApplicationContext(), "", "", true);
+                uptTask = new UpdateProfileTask();
+                uptTask.execute();
+            }
+        });
+    }
+/*
+    public void setProfileInfo() {
+
+        serverodometer.setText(g.getUserData().getFirstName());
+        servicedate.setText(g.getUserData().getLastName());
+        Cost.setText(g.getUserData().getEmail());
+        Comments.setText(g.getUserData().getLicenseNumber());
+    }
+*/
+    public class UpdateProfileTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link, data, result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+
+            try {
+                data = "?Service_ID=" + serviceid;
+                data += "&vechile_name=" + vehicle_name;
+                data += "&Service_Odometer=" + URLEncoder.encode(String.valueOf(serverodometer), "UTF-8");
+                data += "&Service_Date=" + URLEncoder.encode(String.valueOf(servicedate), "UTF-8");
+                data += "&Cost=" + URLEncoder.encode(String.valueOf(Cost), "UTF-8");
+                data += "&Comments=" + URLEncoder.encode(String.valueOf(Comments), "UTF-8");
+                data += "&Priority_ID=" +Priority_id ;
+                data += "&callback";
+                link = g.getMySiteUrl() + "/webservice/public/UpdateService" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            progressUpdate.dismiss();
+            if (result.equals("yes")) {
+
+
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+        }
+    }
+}

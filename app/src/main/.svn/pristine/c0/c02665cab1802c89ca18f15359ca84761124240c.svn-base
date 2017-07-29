@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arr_sort">
+        <item>Default</item>
+        <item>Listing Date (Most Recent)</item>
+        <item>Lowest Price first</item>
+        <item>Highest Price first</item>
+        <item>Earliest Inspection</item>
+    </string-array>
+</resources>

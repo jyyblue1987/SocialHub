@@ -1,0 +1,206 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+
+
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+import com.fastwiki.com.socialhub.model.FriendData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class Friend extends CustomFragment
+{
+    private GetFriendJSON gj;
+    Globals g = Globals.getInstance();
+
+    ArrayList<Integer> selectedIdxList = new ArrayList<Integer>();
+
+    public Friend(){}
+
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.friend, null);
+        final ListView localListView = (ListView)localView.findViewById(R.id.list);
+        gj = new GetFriendJSON(getContext() , localListView);
+        gj.execute("");
+        setHasOptionsMenu(true);
+        return localView;
+    }
+
+    public void onCreateOptionsMenu(Menu paramMenu, MenuInflater paramMenuInflater)
+    {
+        paramMenuInflater.inflate(R.menu.friend_menu, paramMenu);
+        super.onCreateOptionsMenu(paramMenu, paramMenuInflater);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+    {
+        if (paramMenuItem.getItemId() == R.id.action_add) {
+
+            //startActivity(new Intent(getActivity(), Search.class));
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Title");
+            builder.show();
+
+
+        }
+        return super.onOptionsItemSelected(paramMenuItem);
+    }
+
+    class FriendAdapter extends BaseAdapter
+    {
+        private Context context;
+        private ArrayList<FriendData> items;
+        public FriendAdapter(Context paramContext, ArrayList<FriendData> paramArrayList)
+        {
+            this.context = paramContext;
+            this.items = paramArrayList;
+        }
+        public int getCount()
+        {
+            return this.items.size();
+        }
+        public FriendData getItem(int paramInt)
+        {
+            return (FriendData)this.items.get(paramInt);
+        }
+        public long getItemId(int paramInt)
+        {
+            return paramInt;
+        }
+
+        public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+        {
+            if (paramView == null) {
+                paramView = LayoutInflater.from(this.context).inflate(R.layout.friend_item, null);
+            }
+            ((TextView)paramView.findViewById(R.id.lbl1)).setText(getItem(paramInt).getFriendName());
+            ((TextView)paramView.findViewById(R.id.lbl2)).setText(getItem(paramInt).getFriendEmail());
+            ((TextView)paramView.findViewById(R.id.lbl3)).setText(getItem(paramInt).getFriendEmail());
+            getImageData(paramView,  getItem(paramInt).getFriendPhotoUrl());
+            return paramView;
+        }
+
+        public void getImageData(View v,  String picUrl){
+
+            class GetImageData extends AsyncTask<String, Void, Void> {
+
+                Bitmap bmp;
+                ImageView img;
+                GetImageData(View v) {
+                    img = (ImageView)v.findViewById(R.id.img1);
+                }
+                @Override
+                protected Void doInBackground(String... params) {
+                    String img_path = params[0];
+                    try {
+                        InputStream in = new URL(img_path).openStream();
+                        bmp = BitmapFactory.decodeStream(in);
+                    } catch (Exception e) {
+                        // log error
+                    }
+                    return null;
+                }
+                @Override
+                protected void onPostExecute(Void result) {
+                    if (bmp != null) img.setImageBitmap(bmp);
+                }
+            }
+            GetImageData gij = new GetImageData(v);
+            gij.execute(picUrl);
+        }
+    }
+
+    class GetFriendJSON extends AsyncTask<String, Void, String> {
+
+        Globals g = Globals.getInstance();
+        private String myJSONString;
+        private static final String JSON_ARRAY ="result";
+
+        ArrayList friendArrayList = new ArrayList();
+        private JSONArray retList = null;
+
+        Context context;
+        ListView listView;
+
+        public GetFriendJSON(Context c , ListView v){
+            context = c;
+            listView = v;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            BufferedReader bufferedReader = null;
+            try {
+                String uri = null;
+                uri = g.getMySiteUrl()+"/readFromdb.php";;
+                uri += "?mode=imageListInfo&sel_kind=2";
+                URL url = new URL(uri);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                StringBuilder sb = new StringBuilder();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String json;
+                while((json = bufferedReader.readLine())!= null){sb.append(json+"\n");}
+                return sb.toString().trim();
+
+            }catch(Exception e){
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            super.onPostExecute(s);
+            myJSONString = "{'"+JSON_ARRAY+"':" + s + "}";
+            try {
+                JSONObject jsonObject = new JSONObject(myJSONString);
+                retList = jsonObject.getJSONArray(JSON_ARRAY);
+                JSONObject oneObj;
+                friendArrayList.clear();
+                for (int i = 0; i < retList.length(); i++)
+                {
+                    oneObj = retList.getJSONObject(i);
+                    friendArrayList.add(new FriendData(oneObj.getString("uid") ,oneObj.getString("imgname") ,oneObj.getString("imgdesc") , oneObj.getString("imgurl")));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            listView.setAdapter(new FriendAdapter(context , friendArrayList));
+        }
+    }
+}

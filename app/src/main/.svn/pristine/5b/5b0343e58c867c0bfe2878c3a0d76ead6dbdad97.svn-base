@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16.0dip</dimen>
+    <dimen name="activity_vertical_margin">16.0dip</dimen>
+    <dimen name="store_img_height">185.0dip</dimen>
+    <dimen name="profile_grid_w">300.0dip</dimen>
+    <dimen name="profile_col_w">145.0dip</dimen>
+    <dimen name="profile_cover_h">190.0dip</dimen>
+</resources>

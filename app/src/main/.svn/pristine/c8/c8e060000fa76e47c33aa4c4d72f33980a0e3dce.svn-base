@@ -1,0 +1,232 @@
+package com.fastwiki.com.socialhub;
+
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+
+public class Login extends Activity implements View.OnClickListener{
+
+    private Button btnLogin;
+    private EditText inputUserId;
+    private EditText inputUserPassword;
+
+    private UserLoginTask c_userLoginTask = null;
+
+    ProgressDialog progressLogin = null;
+    SharedPreferences mySharedPreferences ;
+
+    Globals g = Globals.getInstance();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+
+        mySharedPreferences=getSharedPreferences("myPreference",getApplicationContext().MODE_PRIVATE);
+
+        /*
+        if (getIntent().getStringExtra("mode").equals("logout")){
+            SharedPreferences.Editor editor= mySharedPreferences.edit();
+            editor.putString("myemail","");
+            editor.putString("mypass","");
+            editor.commit();
+        }
+        */
+
+        btnLogin = (Button)findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(this);
+
+        inputUserId = (EditText)findViewById(R.id.inputUsername);
+        inputUserId.setText(mySharedPreferences.getString("myemail",""));
+
+        inputUserPassword = (EditText)findViewById(R.id.inputPassword);
+        inputUserPassword.setText(mySharedPreferences.getString("mypass",""));
+    }
+
+    public void onClick(View v)
+    {
+        // login
+        if (v == btnLogin){
+
+            //g.setMyIMEI(this);
+            attemptLogin();
+        }
+        // register
+        /*
+        if (v == btnRegister){
+
+        }
+        */
+    }
+
+    public void attemptLogin(){
+
+        String strUserId = inputUserId.getText().toString();
+        String strUserPassword = inputUserPassword.getText().toString();
+
+        boolean cancel = false;
+
+        /*
+        if (strUserId.isEmpty() || !isEmailValid(strUserId)){
+            //inputUserId.setError("");
+            inputUserId.setText("");
+            inputUserId.requestFocus();
+            cancel = true;
+        }
+
+        if (strUserPassword.isEmpty() || !isPasswordValid(strUserPassword)){
+            //inputUserPassword.setError("");
+            inputUserPassword.setText("");
+            inputUserPassword.requestFocus();
+            cancel = true;
+        }
+
+        if (!cancel){
+            progressLogin = ProgressDialog.show(this , "" , "", true);
+            c_userLoginTask = new UserLoginTask(strUserId , strUserPassword);
+            c_userLoginTask.execute();
+        }
+        */
+
+        startActivity(new Intent(Login.this , MainActivity.class));
+
+    }
+
+    private boolean isEmailValid(String p_email) {
+        //TODO: Replace this with your own logic
+        //return p_email.contains("@");
+        return true;
+    }
+
+    private boolean isPasswordValid(String p_password) {
+        //TODO: Replace this with your own logic
+        return p_password.length() > 0;
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
+
+        // control value
+
+        private final String c_userId;
+        private final String c_userPassword;
+        private String myJSONString;
+        private static final String JSON_ARRAY ="result";
+
+        UserLoginTask(String email, String password) {
+            c_userId = email;
+            c_userPassword = password;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            // confirm user login
+            try {
+                data = "email=" + URLEncoder.encode(c_userId, "UTF-8");
+                data += "&pass=" + URLEncoder.encode(c_userPassword, "UTF-8");
+                link = g.getMySiteUrl()+"/login/BoyLogIn?" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            String ret = null;
+            String boyId = null;
+            String boyName = null;
+            String boyEmail = null;
+            String boyPassword = null;
+            String boyMobile = null;
+            String boyIMEI = null;
+            String boyCallerId = null;
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                ret = jsonObject.getString("confirm");
+                boyId = jsonObject.getString("uid");
+                boyName = jsonObject.getString("username");
+                boyEmail = jsonObject.getString("user_email");
+                boyPassword = jsonObject.getString("password");
+                boyMobile = jsonObject.getString("mobile_number");
+                boyCallerId = jsonObject.getString("caller_id");
+                boyIMEI = jsonObject.getString("imei");
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            c_userLoginTask = null;
+
+            if (ret.equals("login_ok")){
+
+                //if (g.getMyIMEI().equals(boyIMEI)){
+                    SharedPreferences.Editor editor= mySharedPreferences.edit();
+                    editor.putString("myemail",boyEmail);
+                    editor.putString("mypass",boyPassword);
+                    editor.commit();
+                //}
+                //else{
+                //    progressLogin.dismiss();
+                //    Toast.makeText(getApplicationContext() , "Do not match IMEI." , Toast.LENGTH_SHORT).show();
+                //}
+            }
+            else if (ret.equals("email_failure")){
+                progressLogin.dismiss();
+                inputUserId.setText("");
+                inputUserId.requestFocus();
+            }
+            else if (ret.equals("pass_failure")){
+                progressLogin.dismiss();
+                inputUserPassword.setText("");
+                inputUserPassword.requestFocus();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+}

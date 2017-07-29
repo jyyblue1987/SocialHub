@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black">
+
+    <EditText android:id="@+id/inputSearchStr"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:hint="@string/find"
+        style="@style/edittext_search" />
+
+    <ListView android:id="@+id/listNavigate"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/black"/>
+
+</LinearLayout>
+
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#130E07">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#92C83E"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Work Order"
+                android:gravity="center_vertical"
+                android:layout_weight="0.1"
+                android:textColor="#FFFFFF"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:id="@+id/spinInspection"
+                android:layout_weight="0.9"
+                android:background="@drawable/spinner_border"
+                android:popupBackground="#000000"
+                android:layout_gravity="center_vertical"
+                android:spinnerMode="dropdown" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listVehicleInspection"
+            android:layout_weight="1" />
+
+</LinearLayout>
+    </LinearLayout>

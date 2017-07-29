@@ -1,0 +1,62 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+public class Status extends CustomFragment
+{
+    Button btndriving,btnonduty ,btnoffduty ,btnsleeper,btnsubstatus;
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.status, null);
+        btndriving = (Button)localView.findViewById(R.id.driveing);
+        btndriving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               btndriving.setBackgroundColor(Color.parseColor("#466F05"));
+            }
+        });
+        btnonduty = (Button)localView.findViewById(R.id.onduty);
+        btnonduty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnonduty.setBackgroundColor(Color.parseColor("#466F05"));
+            }
+        });
+        btnoffduty = (Button)localView.findViewById(R.id.offduty);
+        btnoffduty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnoffduty.setBackgroundColor(Color.parseColor("#466F05"));
+            }
+        });
+        btnsleeper = (Button)localView.findViewById(R.id.sleeper);
+        btnsleeper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnsleeper.setBackgroundColor(Color.parseColor("#466F05"));
+            }
+        });
+        btnsubstatus = (Button)localView.findViewById(R.id.substatus);
+        btnsubstatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnsubstatus.setBackgroundColor(Color.parseColor("#466F05"));
+            }
+        });
+
+
+        setHasOptionsMenu(true);
+        return localView;
+       // return paramLayoutInflater.inflate(R.layout.status, null);
+    }
+}

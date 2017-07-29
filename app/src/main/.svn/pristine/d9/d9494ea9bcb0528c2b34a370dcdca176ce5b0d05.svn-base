@@ -1,0 +1,54 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+public class Vehicle extends CustomFragment
+{
+    Button btnincident,btninspect ,btnmaint ;
+    public Vehicle(){}
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.vehicle, null);
+        btnincident = (Button)localView.findViewById(R.id.incident);
+        btnincident.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Vehicle.this.getActivity(), VehicleIncident.class);
+                Vehicle.this.startActivity(intent);
+            }
+        });
+        btninspect = (Button)localView.findViewById(R.id.inspect);
+        btninspect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Vehicle.this.getActivity(), VehicleInspection.class);
+                Vehicle.this.startActivity(intent);
+            }
+        });
+        btnmaint = (Button)localView.findViewById(R.id.maint);
+        btnmaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Vehicle.this.getActivity(), VehicleMaintenance.class);
+                Vehicle.this.startActivity(intent);
+            }
+        });
+
+        setHasOptionsMenu(true);
+        return localView;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+    {
+        return super.onOptionsItemSelected(paramMenuItem);
+    }
+}

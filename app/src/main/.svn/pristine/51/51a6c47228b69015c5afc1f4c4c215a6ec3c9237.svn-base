@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#130E07"
+    android:weightSum="2">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:weightSum="8">
+
+    <Button
+        style="@style/common_btn"
+        android:text="Vehicle incident"
+        android:id="@+id/incident"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        style="@style/common_btn"
+        android:text="Vehicle Inspection"
+        android:id="@+id/inspect"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        />
+
+    <Button
+        style="@style/common_btn"
+        android:text="Vehicle maintenance"
+        android:id="@+id/maint"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        />
+
+</LinearLayout>
+</LinearLayout>

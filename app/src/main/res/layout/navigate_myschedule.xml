@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/black">
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/common_txt" android:id="@+id/lbl1"
+            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:text="June 26, 2016"
+            android:gravity="center_horizontal"
+            android:drawableRight="@drawable/ic_calendar"/>
+
+    </LinearLayout>
+
+    <EditText android:id="@+id/inputSearchStr"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:hint="@string/find"
+        style="@style/edittext_search" />
+
+    <Gallery
+        android:id="@+id/galleryPhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <ListView android:id="@+id/listMySchedule"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/black"/>
+
+</LinearLayout>
+
+

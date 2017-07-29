@@ -1,0 +1,146 @@
+package com.fastwiki.com.socialhub;
+
+import android.graphics.drawable.GradientDrawable;
+
+import com.fastwiki.com.socialhub.model.DeviceData;
+import com.fastwiki.com.socialhub.model.IncidentTypeData;
+import com.fastwiki.com.socialhub.model.LoginData;
+import com.fastwiki.com.socialhub.model.StateData;
+import com.fastwiki.com.socialhub.model.UserData;
+import com.fastwiki.com.socialhub.model.VehicleData;
+import com.fastwiki.com.socialhub.model.VendorData;
+import com.fastwiki.com.socialhub.model.VendorTypeData;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Globals {
+
+    private static Globals instance;
+    private String mySiteUrl;
+
+    private LoginData sel_loginData;
+    private UserData sel_userData;
+
+    private String sel_status = null;
+    private String sel_subStatus = null;
+
+    private ArrayList<DeviceData> sel_deviceList = new ArrayList<DeviceData>();
+    public String[] device_name = null;
+
+    private ArrayList<StateData> sel_stateList = new ArrayList<StateData>();
+    public String[] state_long_name = null;
+    public String[] state_short_name = null;
+
+    private ArrayList<VehicleData> sel_vehicleList = new ArrayList<VehicleData>();
+    private ArrayList<IncidentTypeData> sel_incidentTypeList = new ArrayList<IncidentTypeData>();
+    private ArrayList<VendorData> sel_vendorList = new ArrayList<VendorData>();
+    private ArrayList<VendorTypeData> sel_vendorTypeList = new ArrayList<VendorTypeData>();
+
+
+    public String[] level_lbl = {"High","Medium","Low"};
+
+
+
+
+    public String getMySiteUrl() {
+        //mySiteUrl = "http://altraxs.altracore.com/webservice";
+        mySiteUrl = "http://192.168.137.88/WebService";
+        return mySiteUrl;
+    }
+
+    public String getJsonStringByJsonp(String str){
+
+        String ret = null;
+        ret = str.replace(")", "");
+        ret = ret.replace("(", "");
+        ret = ret.replace("]", "");
+        ret = ret.replace("[", "");
+        return ret;
+    }
+
+    public void setLoginData(LoginData param){
+        sel_loginData = param;
+    }
+    public LoginData getLoginData(){
+        return sel_loginData;
+    }
+
+    public void setUserData(UserData param){
+        sel_userData = param;
+    }
+    public UserData getUserData(){
+        return sel_userData;
+    }
+
+    public void setStatus(String param){
+        sel_status = param;
+    }
+    public String getStatus(){
+        return sel_status;
+    }
+
+    public void setSubStatus(String param){
+        sel_subStatus = param;
+    }
+    public String getSubStatus(){
+        return sel_subStatus;
+    }
+
+    public void setDeivceList(ArrayList<DeviceData> data){
+        sel_deviceList = data;
+        int cnt = sel_deviceList.size();
+        device_name = new String[cnt];
+        for (int i = 0 ; i < cnt ; i++) {
+            device_name[i] = sel_deviceList.get(i).getDriver();
+        }
+    }
+    public ArrayList<DeviceData> getDeviceList(){ return sel_deviceList;}
+
+    public void setStateList(ArrayList<StateData> data){
+        sel_stateList = data;
+        int cnt = sel_stateList.size();
+        state_long_name = new String[cnt];
+        state_short_name = new String[cnt];
+        for (int i = 0 ; i < cnt ; i++) {
+            state_long_name[i] = sel_stateList.get(i).getLongName();
+            state_short_name[i] = sel_stateList.get(i).getShortName();
+        }
+    }
+    public ArrayList<StateData> getStateList(){ return sel_stateList;}
+
+    public void setVehicleList(ArrayList<VehicleData> data){
+        sel_vehicleList = data;
+    }
+    public ArrayList<VehicleData> getVehicleList(){ return sel_vehicleList;}
+
+    public void setIncidentTypeList(ArrayList<IncidentTypeData> data){
+        sel_incidentTypeList = data;
+    }
+    public ArrayList<IncidentTypeData> getIncidentTypeList(){ return sel_incidentTypeList;}
+
+    public void setVendorList(ArrayList<VendorData> data){
+        sel_vendorList = data;
+    }
+    public ArrayList<VendorData> getVendorList(){ return sel_vendorList;}
+
+    public void setVendorTypeList(ArrayList<VendorTypeData> data){
+        sel_vendorTypeList = data;
+    }
+    public ArrayList<VendorTypeData> getVendorTypeList(){ return sel_vendorTypeList;}
+
+    public String getCurrentTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String currentDateandTime = sdf.format(new Date());
+        return currentDateandTime;
+    }
+
+    public static synchronized Globals getInstance(){
+        if(instance==null){
+            instance=new Globals();
+        }
+        return instance;
+    }
+}

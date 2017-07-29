@@ -1,0 +1,189 @@
+package com.fastwiki.com.socialhub;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+import com.fastwiki.com.socialhub.model.MenuData;
+import com.fastwiki.com.socialhub.ui.Eobr;
+import com.fastwiki.com.socialhub.ui.Home;
+import com.fastwiki.com.socialhub.ui.LeftNavAdapter;
+
+import com.fastwiki.com.socialhub.ui.Map;
+import com.fastwiki.com.socialhub.ui.Navigate;
+import com.fastwiki.com.socialhub.ui.Poi;
+import com.fastwiki.com.socialhub.ui.Tpms;
+import com.fastwiki.com.socialhub.ui.Status;
+import java.util.ArrayList;
+import com.fastwiki.com.socialhub.ui.Settings;
+import com.fastwiki.com.socialhub.ui.Vehicle;
+import com.fastwiki.com.socialhub.ui.Trip;
+
+public class MainActivity extends CustomActivity
+{
+    private DrawerLayout drawerLayout;
+    private ListView drawerLeft;
+    private ActionBarDrawerToggle drawerToggle;
+    public LeftNavAdapter leftAdapter;
+
+    protected void onCreate(Bundle paramBundle)
+    {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.activity_main);
+        setupContainer();
+        setupDrawer();
+    }
+
+    private void setupContainer()
+    {
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener()
+        {
+            public void onBackStackChanged()
+            {
+                MainActivity.this.setActionBarTitle();
+                MainActivity.this.drawerLayout.closeDrawers();
+            }
+        });
+    }
+
+    private void setupDrawer()
+    {
+        this.drawerLayout = ((DrawerLayout)findViewById(R.id.drawer_layout));
+        this.drawerToggle = new ActionBarDrawerToggle(this, this.drawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close)
+        {
+            public void onDrawerClosed(View paramAnonymousView)
+            {
+                MainActivity.this.setActionBarTitle();
+            }
+            public void onDrawerOpened(View paramAnonymousView)
+            {
+                MainActivity.this.getActionBar().setTitle(R.string.app_name);
+            }
+        };
+        this.drawerLayout.setDrawerListener(this.drawerToggle);
+        this.drawerLayout.closeDrawers();
+        setupLeftNavDrawer();
+    }
+
+    private void setupLeftNavDrawer()
+    {
+        this.drawerLeft = ((ListView)findViewById(R.id.left_drawer));
+        this.leftAdapter = new LeftNavAdapter(this, getDummyLeftNavItems());
+        this.drawerLeft.setAdapter(leftAdapter);
+        this.drawerLeft.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> paramAnonymousAdapterView, View paramAnonymousView, int paramAnonymousInt, long paramAnonymousLong)
+            {
+                MainActivity.this.drawerLayout.closeDrawers();
+                MainActivity.this.launchFragment(paramAnonymousInt);
+            }
+        });
+        this.drawerLayout.openDrawer(this.drawerLeft);
+    }
+
+    private ArrayList<MenuData> getDummyLeftNavItems()
+    {
+        ArrayList localArrayList = new ArrayList();
+        localArrayList.add(new MenuData("HOME", null, R.drawable.ic_home));
+        localArrayList.add(new MenuData("STATUS", null, R.drawable.ic_status));
+        localArrayList.add(new MenuData("SETTINGS", null, R.drawable.ic_settings));
+        localArrayList.add(new MenuData("VEHICLE", null, R.drawable.ic_vehicle));
+        localArrayList.add(new MenuData("TRIP", null, R.drawable.ic_trip));
+        localArrayList.add(new MenuData("ALERT", null, R.drawable.ic_alert));
+        localArrayList.add(new MenuData("EOBR", null, R.drawable.ic_eobr));
+        localArrayList.add(new MenuData("TPMS", null, R.drawable.ic_tpms));
+        localArrayList.add(new MenuData("POL", null, R.drawable.ic_pol));
+        localArrayList.add(new MenuData("NAVIGATE", null, R.drawable.ic_navigate));
+        localArrayList.add(new MenuData("MAP", null, R.drawable.ic_map));
+        return localArrayList;
+    }
+
+    private void setActionBarTitle()
+    {
+        if (this.drawerLayout.isDrawerOpen(this.drawerLeft)) {
+            getActionBar().setLogo(R.drawable.icon);
+            getActionBar().setTitle(R.string.app_name);
+        }
+        while (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            return;
+        }
+        String str = getSupportFragmentManager().getBackStackEntryAt(-1 + getSupportFragmentManager().getBackStackEntryCount()).getName();
+        getActionBar().setTitle(str);
+    }
+
+    public void onConfigurationChanged(Configuration paramConfiguration)
+    {
+        super.onConfigurationChanged(paramConfiguration);
+        this.drawerToggle.onConfigurationChanged(paramConfiguration);
+    }
+
+    public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent)
+    {
+        if (paramInt == 4)
+        {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1)
+            {
+                getSupportFragmentManager().popBackStackImmediate();
+                return true;
+            }
+            finish();
+            return true;
+        }
+        return super.onKeyDown(paramInt, paramKeyEvent);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+    {
+        if (this.drawerToggle.onOptionsItemSelected(paramMenuItem)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(paramMenuItem);
+    }
+
+    protected void onPostCreate(Bundle paramBundle)
+    {
+        super.onPostCreate(paramBundle);
+        this.drawerToggle.syncState();
+    }
+
+    private void launchFragment(int paramInt)
+    {
+        String str = "";
+        Object localObject = null;
+        switch (paramInt)
+        {
+            case 0: str = "Home";           localObject = new Home();       break;
+            case 1: str = "Status";         localObject = new Status();     break;
+            case 2: str = "Settings";       localObject = new Settings();   break;
+            case 3: str = "Vehicle";        localObject = new Vehicle();    break;
+            case 4: str = "Trip";           localObject = new Trip();       break;
+            case 5: str = "Contact List";   localObject = new Eobr();       break;
+            case 6: str = "EOBR";           localObject = new Eobr();       break;
+            case 7: str = "TPMS";           localObject = new Tpms();       break;
+            case 8: str = "POI";            localObject = new Poi();        break;
+            case 9: str = "NAVIGATE";       localObject = new Navigate();   break;
+            case 10: str = "MAP";           localObject = new Map();        break;
+        }
+        for (;;)
+        {
+            if (getSupportFragmentManager().getBackStackEntryCount() <= 0)
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, (Fragment)localObject).addToBackStack(str).commit();
+                if (this.leftAdapter != null) {
+                    this.leftAdapter.setSelection(paramInt);
+                }
+                return;
+            }
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+    }
+}

@@ -1,0 +1,29 @@
+package com.fastwiki.com.socialhub.model;
+
+public class OptionData
+{
+    private String uid;
+    private String name;
+    private String type;
+
+    public OptionData(String param1 , String param2)
+    {
+        this.uid  = param1;
+        this.name = param2;
+    }
+
+    public String getUid()
+    {
+        return this.uid;
+    }
+
+    public void setName(String paramString)
+    {
+        this.name = paramString;
+    }
+    public String getName()
+    {
+        return this.name;
+    }
+
+}

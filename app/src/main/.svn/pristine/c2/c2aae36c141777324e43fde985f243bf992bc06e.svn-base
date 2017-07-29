@@ -1,0 +1,52 @@
+package com.fastwiki.com.socialhub.data;
+
+public class OrderData
+{
+    private String uid;
+    private String maintype;
+    private String maindate;
+    private String maindometer;
+
+
+    public OrderData(String order_uid , String paramString1, String paramString2, String paramString3)
+    {
+        this.uid = order_uid;
+        this.maintype = paramString1;
+        this.maindate = paramString2;
+        this.maindometer = paramString3;
+
+    }
+
+    public String getuid()
+    {
+        return this.uid;
+    }
+
+    public void setmaintype(String paramString)
+    {
+        this.maintype = paramString;
+    }
+    public String getmaintype()
+    {
+        return this.maintype;
+    }
+
+    public void setmaindate(String paramString)
+    {
+        this.maindate = paramString;
+    }
+    public String getmaindate()
+    {
+        return this.maindate;
+    }
+
+    public void setmaindometer(String paramString)
+    {
+        this.maindometer = paramString;
+    }
+    public String getmaindometer()
+    {
+        return this.maindometer;
+    }
+
+}

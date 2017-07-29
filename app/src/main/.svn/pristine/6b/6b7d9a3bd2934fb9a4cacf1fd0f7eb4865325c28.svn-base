@@ -1,0 +1,43 @@
+package com.fastwiki.com.socialhub.model;
+
+public class ContactData
+{
+    private String contactName;
+    private String contactMobileNum;
+    private String contactEmail;
+
+    public ContactData(String paramString1, String paramString2, String paramString3)
+    {
+        this.contactName = paramString1;
+        this.contactMobileNum = paramString2;
+        this.contactEmail = paramString3;
+    }
+
+    public void setContactName(String paramString)
+    {
+        this.contactName = paramString;
+    }
+    public String getContactName()
+    {
+        return this.contactName;
+    }
+
+    public void setContactMobileNum(String paramString)
+    {
+        this.contactMobileNum = paramString;
+    }
+    public String getContactMobileNum()
+    {
+        return this.contactMobileNum;
+    }
+
+    public void setContactEmail(String paramString)
+    {
+        this.contactEmail = paramString;
+    }
+    public String getContactEmail()
+    {
+        return this.contactEmail;
+    }
+}
+

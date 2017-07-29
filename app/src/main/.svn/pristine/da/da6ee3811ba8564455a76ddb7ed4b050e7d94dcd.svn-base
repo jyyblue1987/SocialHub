@@ -1,0 +1,476 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
+
+import com.fastwiki.com.socialhub.MainActivity;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import java.lang.Thread.*;
+import java.util.Date;
+import java.util.Locale;
+
+public class Upload extends CustomFragment
+{
+    // Activity request codes
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
+    private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    //public static final int MEDIA_TYPE_VIDEO = 2;
+
+    // directory name to store captured images and videos
+    private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
+
+
+
+    private int screenOpen;
+    private Uri imageUri;
+
+    private Button cameraBtn;
+    private Button uploadBtn;
+    private Button videoBtn;
+
+    private Button testBtn;
+
+    private ImageView imgView;
+    private VideoView videoView;
+
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    //String upLoadServerUri = "http://localhost/upload/UploadToServer.php";
+    String upLoadServerUri = "http://www.nofreelunches.com/UploadToServer.php";
+
+    final String uploadFilePath = "/mnt/sdcard/";
+    final String uploadFileName = "out.jpg";
+
+    ProgressDialog dialog = null;
+    TextView messageText;
+
+
+    private Uri fileUri;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+
+    int i = 0;
+
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.upload, null);
+        cameraBtn = (Button)(localView.findViewById(R.id.btn1));
+        cameraBtn.setOnClickListener(this);
+
+        uploadBtn = (Button)(localView.findViewById(R.id.btn4));
+        uploadBtn.setOnClickListener(this);
+
+        testBtn = (Button)(localView.findViewById(R.id.btn2));
+        testBtn.setOnClickListener(this);
+
+        videoBtn = (Button)(localView.findViewById(R.id.btn3));
+        videoBtn.setOnClickListener(this);
+
+        imgView = (ImageView)(localView.findViewById(R.id.imageView1));
+        videoView = (VideoView)(localView.findViewById(R.id.videoPreview));
+
+        messageText  = (TextView)(localView.findViewById(R.id.messageText));
+
+        return localView;
+    }
+
+    public void onClick(View v){
+
+        if (v == testBtn){
+
+            new Thread() {
+                public void run() {
+                    while (i++ < 1000) {
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    messageText.setText("#" + i);
+
+                                    if (i % 2 == 1) imgView.setImageResource(R.drawable.upload_img);
+                                    else imgView.setImageResource(R.drawable.photo);
+
+                                }
+                            });
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+        }
+
+
+        if (v == cameraBtn) {
+
+            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+            //String file_nm = df.format(Calendar.getInstance().getTime()) + ".jpg";
+            String file_nm = "out.jpg";
+            this.screenOpen = 1;
+            Intent localIntent = new Intent("android.media.action.IMAGE_CAPTURE");
+            File localFile = new File(Environment.getExternalStorageDirectory(), file_nm);
+            localIntent.putExtra("output", Uri.fromFile(localFile));
+            this.imageUri = Uri.fromFile(localFile);
+            //startActivityForResult(localIntent, 2);
+            startActivityForResult(localIntent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+        }
+
+        if (v == videoBtn) {
+
+            /*
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+            // set video quality
+            // 1- for high quality video
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            // start the video capture Intent
+            startActivityForResult(intent, CAMERA_CAPTURE_VIDEO_REQUEST_CODE);
+            */
+        }
+
+        if (v == uploadBtn){
+
+            dialog = ProgressDialog.show(getContext(), "", "Uploading file...", true);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //creating new thread to handle Http Operations
+                    uploadFile(uploadFilePath+uploadFileName);
+                }
+            }).start();
+        }
+    }
+
+    //android upload file to server
+    public int uploadFile(final String selectedFilePath){
+
+        int serverResponseCode = 0;
+
+        HttpURLConnection connection;
+        DataOutputStream dataOutputStream;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+
+
+        int bytesRead,bytesAvailable,bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+        File selectedFile = new File(selectedFilePath);
+
+
+        String[] parts = selectedFilePath.split("/");
+        final String fileName = parts[parts.length-1];
+
+        if (!selectedFile.isFile()){
+            dialog.dismiss();
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    messageText.setText("Source File Doesn't Exist: " + selectedFilePath);
+                }
+            });
+            return 0;
+        }else{
+            try{
+                FileInputStream fileInputStream = new FileInputStream(selectedFile);
+                URL url = new URL(upLoadServerUri);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);//Allow Inputs
+                connection.setDoOutput(true);//Allow Outputs
+                connection.setUseCaches(false);//Don't use a cached Copy
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setRequestProperty("ENCTYPE", "multipart/form-data");
+                connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                connection.setRequestProperty("uploaded_file",selectedFilePath);
+
+                //creating new dataoutputstream
+                dataOutputStream = new DataOutputStream(connection.getOutputStream());
+
+                //writing bytes to data outputstream
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                        + selectedFilePath + "\"" + lineEnd);
+
+                dataOutputStream.writeBytes(lineEnd);
+
+                //returns no. of bytes present in fileInputStream
+                bytesAvailable = fileInputStream.available();
+                //selecting the buffer size as minimum of available bytes or 1 MB
+                bufferSize = Math.min(bytesAvailable,maxBufferSize);
+                //setting the buffer as byte array of size of bufferSize
+                buffer = new byte[bufferSize];
+
+                //reads bytes from FileInputStream(from 0th index of buffer to buffersize)
+                bytesRead = fileInputStream.read(buffer,0,bufferSize);
+
+                //loop repeats till bytesRead = -1, i.e., no bytes are left to read
+                while (bytesRead > 0){
+                    //write the bytes read from inputstream
+                    dataOutputStream.write(buffer,0,bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable,maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer,0,bufferSize);
+                }
+
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                serverResponseCode = connection.getResponseCode();
+                String serverResponseMessage = connection.getResponseMessage();
+
+                Log.i(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode);
+
+                //response code of 200 indicates the server status OK
+                if(serverResponseCode == 200){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //tvFileName.setText("File Upload completed.\n\n You can see the uploaded file here: \n\n" + "http://coderefer.com/extras/uploads/"+ fileName);
+                        }
+                    });
+                }
+
+                //closing the input and output streams
+                fileInputStream.close();
+                dataOutputStream.flush();
+                dataOutputStream.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(),"File Not Found",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "URL error!", Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
+            }
+            dialog.dismiss();
+            return serverResponseCode;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // show video
+
+    /*
+
+    private boolean isDeviceSupportCamera() {
+        if (getContext().getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA)) {
+            // this device has a camera
+            return true;
+        } else {
+            // no camera on this device
+            return false;
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // save file url in bundle as it will be null on scren orientation
+        // changes
+        outState.putParcelable("file_uri", fileUri);
+    }
+
+    /*
+     * Here we restore the fileUri again
+     */
+    /*
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // get the file url
+        fileUri = savedInstanceState.getParcelable("file_uri");
+    }*/
+
+    /*
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // if the result is capturing Image
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+            // code to check capture image response
+        } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // video successfully recorded
+                // preview the recorded video
+                previewVideo();
+            } else if (resultCode == RESULT_CANCELED) {
+                // user cancelled recording
+                Toast.makeText(getContext(), "User cancelled video recording", Toast.LENGTH_SHORT).show();
+            } else {
+                // failed to record video
+                Toast.makeText(getContext(), "Sorry! Failed to record video", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    */
+
+    /**
+     * ------------ Helper Methods ----------------------
+     * */
+
+    /**
+     * Creating file uri to store image/video
+     */
+
+    /*
+    public Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+    */
+
+    /**
+     * returning image / video
+     */
+
+    /*
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
+                        + IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else if (type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "VID_" + timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    private void previewCapturedImage() {
+        try {
+            // hide video preview
+            videoView.setVisibility(View.GONE);
+
+            imgView.setVisibility(View.VISIBLE);
+
+            // bimatp factory
+            BitmapFactory.Options options = new BitmapFactory.Options();
+
+            // downsizing image as it throws OutOfMemory Exception for larger
+            // images
+            options.inSampleSize = 8;
+            final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
+
+            imgView.setImageBitmap(bitmap);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void previewVideo() {
+        try {
+            // hide image preview
+            imgView.setVisibility(View.GONE);
+
+            videoView.setVisibility(View.VISIBLE);
+            videoView.setVideoPath(fileUri.getPath());
+            // start playing
+            videoView.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,0 +1,166 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <TextView
+        android:layout_width="match_parent" android:layout_height="50dp"
+        android:textColor="@color/white" android:layout_marginLeft="10dp"
+        android:text="Trip:" android:textSize="20sp" android:textStyle="bold"
+        android:gravity="center_vertical"/>
+
+    <LinearLayout
+        style="@style/common_layout" android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tpms_frame_shape1">
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Start:"
+                android:textSize="18sp" android:textColor="@color/black"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblStart"
+                android:textSize="18sp"  android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="End:"
+                android:textSize="18sp" android:textColor="@color/black"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblEnd"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Miles:"
+                android:textSize="18sp" android:textColor="@color/black"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblMiles"
+                android:textSize="18sp"  android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Total Trip:"
+                android:textSize="18sp" android:textColor="@color/black"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblTotalTrip"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent" android:layout_height="50dp"
+        android:textColor="@color/white" android:layout_marginLeft="10dp"
+        android:text="Trip Cost:" android:textSize="20sp" android:textStyle="bold"
+        android:gravity="center_vertical"/>
+
+
+    <LinearLayout
+        style="@style/common_layout" android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tpms_frame_shape0">
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Fuel:"
+                android:textSize="18sp" />
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblFuel"
+                android:textSize="18sp"  android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Fuel Used:"
+                android:textSize="18sp"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblFuelUsed"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Fuel Cost:"
+                android:textSize="18sp"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblFuelCost"
+                android:textSize="18sp"  android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Driver Cost:"
+                android:textSize="18sp"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblDriverCost"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Operating Cost:"
+                android:textSize="18sp"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblOperatingCost"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+            style="@style/common_layout" android:orientation="horizontal">
+            <TextView
+                style="@style/common_txt" android:text="Total Trip Cost:"
+                android:textSize="18sp"/>
+            <TextView
+                style="@style/common_txt" android:id="@+id/lblTotalTripCost"
+                android:textSize="18sp" android:textColor="@color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent" android:layout_height="50dp"
+        android:textColor="@color/white" android:layout_marginLeft="10dp"
+        android:text="Trip Profit/(Loss):" android:textSize="20sp" android:textStyle="bold"
+        android:gravity="center_vertical"/>
+
+    <LinearLayout
+        android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+        style="@style/common_layout" android:orientation="horizontal"
+        android:background="@drawable/tpms_frame_shape1">
+        <TextView
+            style="@style/common_txt" android:text="Profit:"
+            android:textSize="18sp" android:textColor="@color/black"/>
+        <TextView
+            style="@style/common_txt" android:id="@+id/lblStart"
+            android:textSize="18sp"  android:textColor="@color/white"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

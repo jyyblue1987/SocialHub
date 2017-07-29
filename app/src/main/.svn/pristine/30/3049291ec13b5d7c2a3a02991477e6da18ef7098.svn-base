@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#130E07">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollIncident"
+        android:layout_gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <Spinner android:id="@+id/spinVehicle"
+                style="@style/common_edittext"/>
+
+            <Spinner android:id="@+id/spinIncident"
+                style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editDate"
+                style="@style/common_edittext" android:hint="Date"/>
+
+            <EditText android:id="@+id/editTime"
+                style="@style/common_edittext" android:hint="Time"/>
+
+            <Spinner android:id="@+id/spinServertyLevel"
+                style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editAddress"
+                style="@style/common_edittext" android:hint="Address"/>
+
+            <EditText android:id="@+id/editCity"
+                style="@style/common_edittext" android:hint="City"/>
+
+            <Spinner android:id="@+id/spinState"
+                style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editZipCode"
+                style="@style/common_edittext" android:hint="Zip Code"/>
+
+            <EditText android:id="@+id/editDetail"
+                style="@style/common_edittext" android:hint="Vehicle Incident Detail"/>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="can drivable" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkCanDrive" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Any Fatality" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkAnyFatality" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Asset Towed" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkAssetTowed" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Called Insurance" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkCalledInsurance" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Citation Issued" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkCitation" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Injury Treated" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkInjuryTreated" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/common_layout">
+                <TextView style="@style/common_txt" android:text="Preventable" android:textColor="@color/white"/>
+                <CheckBox android:id="@+id/chkPreventable" style="@style/common_checkbox"/>
+            </LinearLayout>
+
+            <EditText android:id="@+id/editInsurenceResponse"
+                style="@style/common_edittext" android:hint="Insurence Response"/>
+
+            <Spinner android:id="@+id/spinVendorType"
+                style="@style/common_edittext"/>
+
+            <Spinner android:id="@+id/spinVendor"
+                style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editPoliceReport"
+                style="@style/common_edittext" android:hint="Police Report"/>
+
+            <EditText android:id="@+id/editRepairCompleteDate"
+                style="@style/common_edittext" android:hint="Repair Complete Date"/>
+
+            <EditText android:id="@+id/editEstimatedRepairCost"
+                style="@style/common_edittext" android:hint="Estimated Repair Cost"/>
+
+            <EditText android:id="@+id/editActualRepairCost"
+                style="@style/common_edittext" android:hint="Actual Repair Cost"/>
+
+            <EditText android:id="@+id/editComments"
+                style="@style/common_edittext" android:hint="Comments"/>
+
+            <Button android:id="@+id/btnIncidentSubmit" style="@style/common_btn"
+                android:text="SUBMIT" android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

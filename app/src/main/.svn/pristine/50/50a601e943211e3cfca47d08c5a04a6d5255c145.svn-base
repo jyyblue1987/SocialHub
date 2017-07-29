@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:id="@id/main"
+    android:background="#130F0A"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout android:gravity="center_horizontal"
+            android:orientation="vertical" android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:weightSum="12">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgPhoto"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/user3"
+                android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edFirstName" android:hint="First Name"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edLastName" android:hint="Last Name"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edEmail" android:hint="Email Address"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edLicense" android:hint="License Number"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edMobileNum" android:hint="Mobile Number"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edAddress" android:hint="Address"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <EditText android:id="@+id/edCity" android:hint="City"
+                style="@style/common_edittext" android:layout_weight="1"/>
+
+            <Spinner android:id="@+id/spinner"
+                style="@style/common_edittext"
+                android:layout_weight="1"/>
+
+            <Button android:id="@+id/btnSettingsProfileUpdate"
+                style="@style/common_btn"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_height="30dp"
+                android:text="Update"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"/>
+
+        </LinearLayout>
+</LinearLayout>

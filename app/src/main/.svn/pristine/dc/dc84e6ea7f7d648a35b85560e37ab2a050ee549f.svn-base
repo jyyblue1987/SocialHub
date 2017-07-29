@@ -1,0 +1,190 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+import com.fastwiki.com.socialhub.data.UserData;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class SettingsDevice extends CustomActivity {
+    Globals g = Globals.getInstance();
+    Spinner spinner;
+    TextView  vechile_name_text,device_name,device_sim;
+    String path[] = {"Laptops","DesktopPC","Tablets","Add-Ons","Gaming"};
+
+    ArrayList<String> temp_str = new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<String>();
+    String Laptops[] = {"Dell","Hp","Apple"};
+    ListView lstView;
+    ArrayAdapter<String> adapter,listadapter;
+    private device_info devinfo =null;
+    private device_detail devdetail;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings_device);
+       // lstView = (ListView) findViewById(R.id.listView);
+      //  for(int i=0;i<Laptops.length;i++)
+       // {
+       //     list.add(Laptops[i]);
+      //  }
+        devinfo = new device_info();
+        devinfo.execute();
+
+        adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item , path);
+       // listadapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item,list);
+       // lstView.setAdapter(listadapter);
+        spinner = (Spinner) findViewById(R.id.spinDevice);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+              //  Toast.makeText(getApplicationContext() , "this is my Toast message!!! =)", Toast.LENGTH_LONG).show();
+                // TODO Auto-generated method stub
+                String s = spinner.getItemAtPosition(arg2).toString();
+                vechile_name_text =(TextView) findViewById(R.id.textVehicle);
+                vechile_name_text.setText(s);
+                device_name =(TextView) findViewById(R.id.txtDriver);
+                device_name.setText(s);
+                device_sim =(TextView) findViewById(R.id.txtDescription);
+                device_sim.setText(s);
+             //   list.add(s);
+              //  listadapter.notifyDataSetChanged();
+            }
+
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+    }
+
+    public class device_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Team_ID=36D107EB-0E9F-4680-9D99-E3FA0BA02A6B" ;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/DeviceDetails" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            try {
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+               // JSONObject jsonObject = new JSONObject(result);
+               String  devid = deviceDetails.getString("Device_ID");
+               String devName = deviceDetails.getString("Device_Name");
+                temp_str.add(devName);
+
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext() , "this is my Toast message!!! =)", Toast.LENGTH_LONG).show();
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+    public class device_detail extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Device_ID=" + temp_str;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/DeviceSpecificDetails" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            String dev_Vechile = null;
+            String devname = null;
+            String devsim = null;
+            String devSerial = null;
+            String devdescription = null;
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                dev_Vechile = jsonObject.getString("Vehicle_Name");
+                devdescription = jsonObject.getString("Device_Description");
+                devsim = jsonObject.getString("Device_SIM_Number");
+                devSerial = jsonObject.getString("Device_Serial_Number");
+                devname = jsonObject.getString("Device_Name");
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+}

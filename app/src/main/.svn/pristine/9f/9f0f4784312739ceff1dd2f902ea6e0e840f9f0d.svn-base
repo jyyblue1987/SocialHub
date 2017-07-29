@@ -1,0 +1,155 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+import java.util.ArrayList;
+
+public class Overview extends CustomFragment
+{
+    private ArrayList<String[]> fList;
+
+    private void loadDummyFeeds(boolean paramBoolean)
+    {
+        ArrayList localArrayList = new ArrayList();
+        localArrayList.add(new String[] { "$950,000 - $1,200,000", "South Extenstion 324", "15 Fair bank place", "6", "2", "1" });
+        if (paramBoolean) {}
+        for (int i = 0;; i = 1)
+        {
+            localArrayList.add(i, new String[] { "$550,000 - $5,200,000", "North Extenstion 454", "14 Mount view place", "4", "3", "2" });
+            this.fList = new ArrayList(localArrayList);
+            this.fList.addAll(localArrayList);
+            this.fList.addAll(localArrayList);
+            this.fList.addAll(localArrayList);
+            this.fList.addAll(localArrayList);
+            this.fList.addAll(localArrayList);
+            this.fList.addAll(localArrayList);
+            return;
+        }
+    }
+
+    private void setFeedList(View paramView, boolean paramBoolean)
+    {
+        loadDummyFeeds(paramBoolean);
+        ListView localListView = (ListView)paramView.findViewById(R.id.list);
+        localListView.setAdapter(new OverviewAdapter());
+        localListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            public void onItemClick(AdapterView<?> paramAnonymousAdapterView, View paramAnonymousView, int paramAnonymousInt, long paramAnonymousLong)
+            {
+                //Overview.this.startActivity(new Intent(Overview.this.getActivity(), Overview.class));
+            }
+        });
+    }
+
+    private void showSortPopup()
+    {
+        AlertDialog.Builder localBuilder = new AlertDialog.Builder(getActivity());
+        localBuilder.setTitle("Sort Listing by");
+
+        localBuilder.setSingleChoiceItems(R.array.arr_sort, 0, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface paramAnonymousDialogInterface, int paramAnonymousInt)
+            {
+                paramAnonymousDialogInterface.dismiss();
+                if ((paramAnonymousInt == 1) || (paramAnonymousInt == 2) || (paramAnonymousInt == 4))
+                {
+                    Overview.this.setFeedList(Overview.this.getView(), true);
+                    return;
+                }
+                Overview.this.setFeedList(Overview.this.getView(), false);
+            }
+        });
+
+        localBuilder.create().show();
+    }
+
+    public void onCreateOptionsMenu(Menu paramMenu, MenuInflater paramMenuInflater)
+    {
+        paramMenuInflater.inflate(R.menu.overview_menu, paramMenu);
+        super.onCreateOptionsMenu(paramMenu, paramMenuInflater);
+    }
+
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        View localView = paramLayoutInflater.inflate(R.layout.overview, null);
+        setHasOptionsMenu(true);
+        setFeedList(localView, false);
+        return localView;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem paramMenuItem)
+    {
+        if (paramMenuItem.getItemId() == R.id.menu_sort) {
+            showSortPopup();
+        }
+        for (;;)
+        {
+            return super.onOptionsItemSelected(paramMenuItem);
+            /*
+            if (paramMenuItem.getItemId() == R.id.menu_search) {
+            }
+            */
+        }
+    }
+
+    private class OverviewAdapter extends BaseAdapter
+    {
+        private OverviewAdapter() {}
+
+        public int getCount()
+        {
+            return Overview.this.fList.size();
+        }
+
+        public String[] getItem(int paramInt)
+        {
+            return (String[])Overview.this.fList.get(paramInt);
+        }
+
+        public long getItemId(int paramInt)
+        {
+            return paramInt;
+        }
+
+        public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+        {
+            if (paramView == null) {
+                paramView = Overview.this.getLayoutInflater(null).inflate(R.layout.overview_item, null);
+            }
+            String[] arrayOfString = getItem(paramInt);
+            ((TextView)paramView.findViewById(R.id.lbl1)).setText(arrayOfString[0]);
+            ((TextView)paramView.findViewById(R.id.lbl2)).setText(arrayOfString[1]);
+            ((TextView)paramView.findViewById(R.id.lbl3)).setText(arrayOfString[2]);
+            ((TextView)paramView.findViewById(R.id.lbl4)).setText(arrayOfString[3]);
+            ((TextView)paramView.findViewById(R.id.lbl5)).setText(arrayOfString[4]);
+            ((TextView)paramView.findViewById(R.id.lbl6)).setText(arrayOfString[5]);
+            ImageView localImageView = (ImageView)paramView.findViewById(R.id.img1);
+            if (paramInt % 2 == 0) {}
+            for (int i = R.drawable.feed1;; i = R.drawable.feed2)
+            {
+                localImageView.setImageResource(i);
+                return paramView;
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#130E07">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20dp"
+        android:id="@+id/scrollIncident"
+        android:layout_gravity="center_vertical" >
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <Spinner android:id="@+id/spinVehicleName" style="@style/common_edittext"/>
+            <Spinner android:id="@+id/spinMaintenanceType" style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editDueOdometer" style="@style/common_edittext"
+                android:hint="Due Odometer"/>
+            <EditText android:id="@+id/editDueDate" style="@style/common_edittext"
+                android:hint="Due Date"/>
+
+            <Spinner android:id="@+id/spinServicePriority" style="@style/common_edittext"/>
+            <Spinner android:id="@+id/spinVendorType" style="@style/common_edittext"/>
+            <Spinner android:id="@+id/spinVendor" style="@style/common_edittext"/>
+
+            <EditText android:id="@+id/editComment" style="@style/common_edittext"
+                android:hint="Comment"/>
+
+            <Button android:id="@+id/btnIncidentSubmit" style="@style/common_btn"
+                android:text="SUBMIT" android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

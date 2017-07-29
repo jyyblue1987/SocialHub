@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#130E07"  android:weightSum="2">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="6">
+
+            <Button
+                style="@style/common_btn"
+                android:text="Profile"
+                android:id="@+id/profile"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                />
+
+            <Button
+                style="@style/common_btn"
+                android:text="Device"
+                android:id="@+id/device"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                />
+
+            <Button
+                style="@style/common_btn"
+                android:text="TPMS"
+                android:id="@+id/tpms"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                />
+</LinearLayout>
+</LinearLayout>

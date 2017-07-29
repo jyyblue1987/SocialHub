@@ -1,0 +1,266 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.*;
+import android.provider.Settings;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomActivity;
+import com.fastwiki.com.socialhub.data.OrderData;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
+public class vehicle_maint extends CustomActivity {
+    Globals g = Globals.getInstance();
+    Spinner spinner;
+    ArrayList<String> temp_str = new ArrayList<String>();
+
+    String path[] = {"Laptops","DesktopPC","Tablets","Add-Ons","Gaming"};
+    ArrayList<String> list  = new ArrayList<String>();
+    String Laptops[] = {"Dell","Hp","Apple"};
+    ListView lstView;
+    ArrayAdapter<String> adapter,listadapter;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.vehicle_mainten);
+        lstView = (ListView) findViewById(R.id.vehiclelist);
+        for(int i=0;i<Laptops.length;i++)
+        {
+            list.add(Laptops[i]);
+        }
+        adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item,path);
+        listadapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item,list);
+        lstView.setAdapter(listadapter);
+        spinner = (Spinner) findViewById(R.id.vehicel_spin);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+/*
+           Bundle b = new Bundle();
+           b.putExtra("service_id",  Service_ID);
+           b.putExtra("vehicle_name",  Vehicle_Name);
+           b.putExtra("Priority_id",  Priority_ID);
+           intent.putExtras(b);
+*/
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                // TODO Auto-generated method stub
+                String s = spinner.getItemAtPosition(arg2).toString();
+                list.add(s);
+                listadapter.notifyDataSetChanged();
+            }
+
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+    }
+
+    private class OrderListAdapter extends BaseAdapter
+    {
+        private Context context;
+        private ArrayList<OrderData> items;
+        public OrderListAdapter(Context paramContext, ArrayList<OrderData> paramArrayList)
+        {
+            this.context = paramContext;
+            this.items = paramArrayList;
+        }
+
+        public int getCount()
+        {
+            return this.items.size();
+        }
+
+        public OrderData getItem(int paramInt)
+        {
+            return (OrderData)this.items.get(paramInt);
+        }
+
+        public long getItemId(int paramInt)
+        {
+            return paramInt;
+        }
+
+        public View getView(int paramInt, View paramView, ViewGroup paramViewGroup)
+        {
+            final LayoutInflater inflater = getLayoutInflater();
+            View list_item = inflater.inflate(R.layout.maintence_value, paramViewGroup, false);
+            OrderData orderData = getItem(paramInt);
+            ((TextView)list_item.findViewById(R.id.textmaintype)).setText(orderData.getmaintype());
+            ((TextView)list_item.findViewById(R.id.textmaindate)).setText(orderData.getmaindate());
+            ((TextView)list_item.findViewById(R.id.textmaindometer)).setText(orderData.getmaindometer());
+            ImageView localImageView = (ImageView)list_item.findViewById(R.id.imagemaintence);
+/*
+            if (orderData.getDeliveryState().equals("1")) localImageView.setImageResource(R.drawable.ic_dash_assigned);
+            if (orderData.getDeliveryState().equals("2")) localImageView.setImageResource(R.drawable.ic_dash_delivered);
+            if (orderData.getDeliveryState().equals("3")) localImageView.setImageResource(R.drawable.ic_dash_undelivered);
+   */
+
+            return list_item;
+        }
+    }
+
+    public class vehicle_info extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Team_ID=36D107EB-0E9F-4680-9D99-E3FA0BA02A6B" ;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/GetVechileDetails" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            String veh_id = null;
+            String veh_name = null;
+            //   String boyEmail = null;
+            //   String boyPassword = null;
+
+            try {
+                 JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                 JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+              //  JSONObject jsonObject = new JSONObject(result);
+                veh_id = jsonObject.getString("Vehicle_ID");
+                veh_name = jsonObject.getString("Vehicle_Name");
+                    temp_str.add(veh_id);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+    public class vehicle_detail extends AsyncTask<Void, Void, String> {
+
+        Context context;
+        ListView listView;
+        private JSONArray retList = null;
+        ArrayList deliveryArrayList = new ArrayList();
+        public vehicle_detail(Context c , ListView v ){
+            context = c;
+            listView = v;
+        }
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+                data = "?Vehicle_ID=" + temp_str;
+                data += "&callback";
+                link = g.getMySiteUrl()+"/webservice/public/Vehiclespecificmaintenence" + data;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+            // TODO: register the new account here.
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            String veh_id = null;
+            String veh_name = null;
+            //   String boyEmail = null;
+            //   String boyPassword = null;
+
+            try {
+              //  JSONObject jsonObject = new JSONObject(result);
+                JSONObject jsonObject = new JSONObject(g.getJsonStringByJsonp(result));
+                JSONObject deviceDetails  = jsonObject.getJSONObject("sucess");
+
+                retList = jsonObject.getJSONArray(String.valueOf(deviceDetails));
+                JSONObject oneObj;
+                deliveryArrayList.clear();
+
+                int retCount = 0;
+                for (int i = 0; i < retList.length(); i++)
+                {
+                    oneObj = retList.getJSONObject(i);
+
+                    String date = oneObj.getString("Due_Date");
+                    String dometer_value = oneObj.getString("Due_Odometer");
+                    String serviceName_value = oneObj.getString("Service_Name");
+                    String customerPostion = oneObj.getString("Comments");
+                    String deliveryDate = oneObj.getString("Priority_ID");
+                    String deliveryState = oneObj.getString("Vehicle_Name");
+                    String serviceId_value = oneObj.getString("Service_ID");
+                    deliveryArrayList.add(new OrderData(serviceId_value , date ,serviceName_value ,dometer_value));
+                    retCount++;
+
+
+                    /*
+                    if (state == 0) deliveryArrayList.add(new OrderData(uid ,goodName ,customerName ,customerPostion,deliveryDate,deliveryState,customerMObile));
+                    else if (String.valueOf(state).equals(deliveryState) && state != 0)
+                        deliveryArrayList.add(new OrderData(uid ,goodName ,customerName ,customerPostion,deliveryDate,deliveryState,customerMObile));
+                    */
+                }
+                //   veh_id = jsonObject.getString("Vehicle_ID");
+             //   veh_name = jsonObject.getString("Vehicle_Name");
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+             listView.setAdapter(new OrderListAdapter(context , deliveryArrayList));
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+}

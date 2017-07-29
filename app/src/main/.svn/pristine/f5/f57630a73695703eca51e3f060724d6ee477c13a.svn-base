@@ -1,0 +1,17 @@
+package com.fastwiki.com.socialhub.ui;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.custom.CustomFragment;
+
+public class Gallery extends CustomFragment
+{
+    public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
+    {
+        return paramLayoutInflater.inflate(R.layout.gallery, null);
+    }
+}

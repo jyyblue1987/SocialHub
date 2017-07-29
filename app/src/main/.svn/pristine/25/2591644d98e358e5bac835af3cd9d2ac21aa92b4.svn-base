@@ -1,0 +1,107 @@
+package com.fastwiki.com.socialhub.custom;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.fastwiki.com.socialhub.Globals;
+import com.fastwiki.com.socialhub.R;
+import com.fastwiki.com.socialhub.ui.MyOnItemSelectedListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+/**
+ * Created by rms on 2016.10.11.
+ */
+public class vehiclename extends CustomActivity{
+
+    protected void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        setContentView(R.layout.settings_device);
+
+        Spinner spinner = (Spinner) findViewById(R.id.device_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.countries_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+    }
+    public class SyncOptionTask extends AsyncTask<Void, Void, String> {
+
+        Globals g = Globals.getInstance();
+        private String myJSONString;
+        private static final String JSON_ARRAY ="result";
+        ArrayList optionList = new ArrayList();
+        private JSONArray retList = null;
+
+        SyncOptionTask() {}
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String link , data , result;
+            BufferedReader bufferedReader;
+            try {
+                // Simulate network access.
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                //return false;
+            }
+            try {
+             //   if (user_type == 'Admin')
+              /*  {
+                    data = "Team_ID=" + URLEncoder.encode(myJSONString , "UTF-8");
+                    data += "&callback=";
+                    link = g.getMySiteUrl() + "public/GetVechileDetails?" + data;
+                }   else{
+                */    data = "Driver_ID=" + URLEncoder.encode(myJSONString, "UTF-8");
+                    data += "&callback=";
+                    link = g.getMySiteUrl() + "public/GetDriverVechileDetails?" + data;
+              //  }
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                result = bufferedReader.readLine();
+                return result;
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        // final Boolean success
+        protected void onPostExecute(String result) {
+
+            super.onPostExecute(result);
+            myJSONString = "{'"+JSON_ARRAY+"':" + result + "}";
+            try {
+                JSONObject jsonObject = new JSONObject(myJSONString);
+                retList = jsonObject.getJSONArray(JSON_ARRAY);
+                JSONObject oneObj;
+                optionList.clear();
+                for (int i = 0; i < retList.length(); i++)
+                {
+                    oneObj = retList.getJSONObject(i);
+                    String opt_uid  = oneObj.getString("Vehicle_ID");
+                    String opt_name = oneObj.getString("Vehicle_Name");
+                    optionList.add(new OptionData(opt_uid ,opt_name));
+                    g.setOptionData(optionList);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        @Override
+        protected void onCancelled() {}
+    }
+
+}

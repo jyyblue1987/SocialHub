@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#130E07">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.02"
+            android:background="#92C83E"
+            android:weightSum="1">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:weightSum="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Trip:"
+            android:id="@+id/textView22"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.02"
+            android:layout_marginTop="20dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_weight="0.2"
+            android:background="@drawable/navigate_toggle_radio_selected_shape"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Start :"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView17"
+                    android:layout_weight="0.15"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tripstart"
+                    android:textSize="18dp"
+                    android:layout_weight="0.85" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.25">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="End :"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView18"
+                    android:layout_weight="0.15"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tripend"
+                    android:textSize="18dp"
+                    android:layout_weight="0.85" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.25">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Miles :"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView19"
+                    android:layout_weight="0.15"
+
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tripmiles"
+                    android:textSize="18dp"
+                    android:layout_weight="0.85" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.25">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=" Total Trip:"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textView20"
+                    android:layout_weight="0.15"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="New Text"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:id="@+id/triptotalval"
+                    android:textSize="18dp"
+                    android:layout_weight="0.85" />
+            </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trip Cost:"
+                android:id="@+id/textView46"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.02"
+                android:layout_marginTop="10dp"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:background="@drawable/board"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:weightSum="1">
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.15"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Fuel:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView40"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/tripfuel"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Fuel Used:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView41"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/tripfulused"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Fuel Cost:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView42"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/tripfuelcost"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Driver Cost:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView43"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/tripdrivercost"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Opearting Cost:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView44"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/tripopeartcost"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Total Trip Cost:"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/textView45"
+                        android:layout_weight="0.2"
+                        android:textColor="#728B50"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="New Text"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center_vertical"
+                        android:id="@+id/triptotalcost"
+                        android:textSize="18dp"
+                        android:layout_weight="0.8" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trip Profit/(Loss):"
+                android:id="@+id/textView"
+                android:gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="0.1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/navigate_toggle_radio_selected_shape">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Profit:"
+                    android:id="@+id/textView47"
+                    android:gravity="center_vertical"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/tripsprofit"
+                    android:gravity="center_vertical"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    android:layout_weight="0.8" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

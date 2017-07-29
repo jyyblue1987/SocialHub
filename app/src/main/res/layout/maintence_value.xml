@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@drawable/board">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#92C83E"
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imagemaintence"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:padding="10dp"
+            android:src="@drawable/user3" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Type:"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:id="@+id/textView29"
+                android:layout_weight="0.3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="New Text"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical"
+                android:id="@+id/textmaintype"
+                android:layout_weight="0.7"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Date:"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:id="@+id/textView30"
+                android:layout_weight="0.3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="New Text"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical"
+                android:id="@+id/textmaindate"
+                android:layout_weight="0.7"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Due Odometer"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:id="@+id/textView31"
+                android:layout_weight="0.3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="New Text"
+                android:textColor="#FFFFFF"
+                android:gravity="center_vertical"
+                android:id="@+id/textmaindometer"
+                android:layout_weight="0.7"/>
+        </LinearLayout>
+
+    </LinearLayout>
+ </LinearLayout>
+</RelativeLayout>

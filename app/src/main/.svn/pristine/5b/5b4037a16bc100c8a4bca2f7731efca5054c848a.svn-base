@@ -1,0 +1,44 @@
+package com.fastwiki.com.socialhub;
+
+import java.util.ArrayList;
+
+public class Globals {
+
+    private static Globals instance;
+
+    private boolean connected;
+    private String myId;
+    private String myPass;
+    private String mySiteUrl;
+
+    public ArrayList<String> frameSizeList = new ArrayList<String>();
+    public ArrayList<String> monthCountList = new ArrayList<String>();
+
+    public void setConnected(boolean d){
+        this.connected = d;
+    }
+    public boolean getConnected(){
+        return this.connected;
+    }
+
+    public void setMyInfo(String id , String pass){
+        this.myId = id;
+        this.myPass = pass;
+    }
+
+    public String getMyId(){return this.myId;}
+    public String getMyPass(){return this.myPass;}
+    public String getMySiteUrl() {
+        //mySiteUrl = "http://vopl.in/myApp/";
+        mySiteUrl = "http://192.168.137.88/myApp/";
+        return mySiteUrl;
+    }
+
+    public static synchronized Globals getInstance(){
+        if(instance==null){
+            instance=new Globals();
+        }
+        return instance;
+    }
+
+}
